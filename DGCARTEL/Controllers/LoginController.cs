@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Data;
 using System.Text;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace DGCARTEL.Controllers
 {
@@ -31,9 +32,9 @@ namespace DGCARTEL.Controllers
         {
             DGCARTELContext db = new DGCARTELContext();
             string USEREMAIL = VM.USER_DETAILS.USEREMAIL;
-            string PASSWORD = VM.USER_DETAILS.PASSWORD ;
+            string PASSWORD = VM.USER_DETAILS.PASSWORD;
             var tblUser_data = db.tblUser.Where(a => a.UserId == USEREMAIL && a.Password == PASSWORD).FirstOrDefault();
-          
+
             if (tblUser_data != null)
             {
                 Session["USEREMAIL"] = USEREMAIL;
@@ -71,60 +72,95 @@ namespace DGCARTEL.Controllers
 
         public ActionResult Registration()
         {
-            return View();
+            LoginScreen VM1 = new LoginScreen();
+            if (TempData["ii"] != null)
+            {
+                string uid = TempData["ii"].ToString();
+                DGCARTELContext db = new DGCARTELContext();
+                var brnchidss = db.tblUser.Where(m => m.UserId == uid).FirstOrDefault();
+                if (brnchidss != null)
+                {
+                    USER_DETAILS1 uSER_DETAILS1 = new USER_DETAILS1()
+                    {
+                        USERID = brnchidss.UserId,
+                        FULLNAME = brnchidss.UserName,
+                        PASSWORD = brnchidss.Password
+                    };
+                    VM1.USER_DETAILS = uSER_DETAILS1;
+                }
+            }
+            VM1.Userdtl = USERlist();
+            return View(VM1);
         }
-
-        //[HttpPost]
-        //public ActionResult Registration(LoginScreen VM)
-        //    {
-        //    if (VM.REMEMBERME == true)
-        //    {
-        //        Response.Cookies["Userid"].Value = VM.tblUser.USEREMAIL;
-        //        Response.Cookies["Password"].Value = VM.tblUser.PASSWORD;
-        //        Response.Cookies["Userid"].Expires = DateTime.Now.AddDays(15);
-        //        Response.Cookies["Password"].Expires = DateTime.Now.AddDays(15);
-        //    }
-        //    else
-        //    {
-        //        Response.Cookies["Userid"].Expires = DateTime.Now.AddDays(-1);
-        //        Response.Cookies["Password"].Expires = DateTime.Now.AddDays(-1);
-        //    }
-        //    if (VM.tblUser.PASSWORD != VM.CPASSWORD)
-        //    {
-        //        ModelState.AddModelError("pass","Password Not Match");
-        //        return View(VM);
-        //    }
-        //    try
-        //    {
-        //        using (DGCARTELContext entities = new DGCARTELContext())
-        //        {
-        //           var USEREMAILchk = entities.tblUser.Where(a => a.USEREMAIL == VM.tblUser.USEREMAIL).ToList();
-        //            if (USEREMAILchk.Any())
-        //            {
-        //                ModelState.AddModelError("Email", "This Email Id allready Exist.");
-        //                return View(VM);
-        //            }
-        //            int datacnt = entities.tblUser.Where(a => a.AUTOUSERID != 0).Count();
-        //            decimal MAXUSERID = 0;
-        //            if (datacnt != 0)
-        //            {
-        //                MAXUSERID = entities.tblUser.Max(a => a.AUTOUSERID);
-        //            }
-        //            else
-        //            {
-        //                MAXUSERID = 0;
-        //            }
-        //            VM.tblUser.AUTOUSERID = MAXUSERID + 1;
-        //            entities.tblUser.Add(VM.tblUser);
-        //            entities.SaveChanges();
-        //        }
-        //        return RedirectToAction("Login", "Login");
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return Content(e.ToString());
-        //    }            
-        //}
+        public ActionResult Registrationedit(string uid)
+        {
+            TempData["ii"] = uid;
+            return RedirectToAction("Registration", "login");
+        }
+        public ActionResult Registrationdelete(string uid)
+        {
+            try
+            {
+                DGCARTELContext db = new DGCARTELContext();
+                var brnchidss = db.tblUser.Where(m => m.UserId == uid).ToList();
+                if (brnchidss != null)
+                {
+                    db.tblUser.RemoveRange(brnchidss);
+                    db.SaveChanges(); LoginScreen VM1 = new LoginScreen();
+                    VM1.Userdtl = USERlist();
+                    return RedirectToAction("Registration", "login", VM1);
+                }
+            }
+            catch (Exception ex)
+            {
+                //Cn.SaveException(ex, "");
+                return Json(ex.Message + ex.InnerException, JsonRequestBehavior.AllowGet);
+            }
+            return View(USERlist());
+        }
+        private List<USER_DETAILS1> USERlist()
+        {
+            DGCARTELContext db = new DGCARTELContext();
+            List<USER_DETAILS1> s = new List<USER_DETAILS1>();
+            var tblUser_data = db.tblUser.ToList();
+            foreach (var v in tblUser_data)
+            {
+                s.Add(new USER_DETAILS1() { USERID = v.UserId, FULLNAME = v.UserName });
+            }
+            return s;
+        }
+        [HttpPost]
+        public ActionResult Registration(LoginScreen VM)
+        {
+            try
+            {
+                DGCARTELContext db = new DGCARTELContext();
+                var tblUser_data = db.tblUser.Where(u => u.UserId == VM.USER_DETAILS.USERID).ToList();
+                using (DGCARTELContext entities = new DGCARTELContext())
+                {
+                    tblUser tblUser = new tblUser();
+                    tblUser.UserId = VM.USER_DETAILS.USERID;
+                    tblUser.UserName = VM.USER_DETAILS.FULLNAME;
+                    tblUser.Password = VM.USER_DETAILS.PASSWORD;
+                    if (tblUser_data.Count > 0)
+                    {
+                        entities.Entry(tblUser).State = System.Data.Entity.EntityState.Modified;
+                    }
+                    else
+                    {
+                        entities.tblUser.Add(tblUser);
+                    }
+                    entities.SaveChanges();
+                }
+                LoginScreen VM1 = new LoginScreen();
+                VM1.Userdtl = USERlist();
+                return View(VM);
+            }
+            catch (Exception e)
+            {
+                return Content(e.ToString());
+            }
+        }
         public ActionResult Logout()
         {
             Session.RemoveAll();
@@ -134,7 +170,7 @@ namespace DGCARTEL.Controllers
         }
         public ActionResult ForgotPassword()
         {
-            LoginScreen VM = new LoginScreen();         
+            LoginScreen VM = new LoginScreen();
             return View(VM);
         }
         //[HttpPost]

@@ -9,11 +9,7 @@ namespace DGCARTEL.Models
     public partial class USER_DETAILS1
     {
 
-        [Column(TypeName = "numeric")]
-        public decimal? UPDT { get; set; }
-        [Key]
-        [Column(TypeName = "numeric")]
-        public decimal AUTOUSERID { get; set; }
+        public string USERID { get; set; }
 
         [Required]
         [StringLength(50)]

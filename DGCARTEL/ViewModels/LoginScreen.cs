@@ -12,6 +12,7 @@ namespace DGCARTEL.ViewModels
         
         public tblUser tblUser { get; set; }
         public USER_DETAILS1 USER_DETAILS { get; set; }
+        public List< USER_DETAILS1 > Userdtl { get; set; }
         public ForgotPassword ForgotPassword { get; set; }
         public bool REMEMBERME { get; set; }
         public string CPASSWORD { get; set; }

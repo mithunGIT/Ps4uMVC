@@ -3,43 +3,45 @@
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_EntryLayout.cshtml";
 }
-    <div class="container py-2">
-        <div class="row">
-            <div class="col-md-12">
-                <h2 class="text-center text-white mb-4">DGcartel Regisration form</h2>
-                <div class="row">
-                    <div class="col-md-7 mx-auto">
-                        <!-- form card login -->
-                       @using (Html.BeginForm())
-                       { 
-                           @Html.ValidationSummary("", new { @class = "text-danger" })
-                            <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-3 col-form-label">Email</label>
-                                <div class="col-sm-9">
-                                    @Html.TextBoxFor(model => model.USER_DETAILS.USEREMAIL , new { @class = "form-control", required = "", placeholder = "Email",type="email" })                                                              
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="inputPassword3" class="col-sm-3 col-form-label">Password</label>
-                                <div class="col-sm-9">
-                                    @Html.PasswordFor(model => model.USER_DETAILS.PASSWORD, new { @class = "form-control", required = "", placeholder = "Password" })
 
-                                </div>
+
+<div class="container py-2">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center text-white mb-4">DGcartel Regisration form</h2>
+            <div class="row">
+                <div class="col-md-7 mx-auto">
+                    <!-- form card login -->
+                    @using (Html.BeginForm())
+                    {
+                        @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-3 col-form-label">USERID</label>
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(model => model.USER_DETAILS.USERID, new { @class = "form-control", required = "", placeholder = "Email", type = "text" })
                             </div>
-                            <div class="form-group row">
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-3 col-form-label">Password</label>
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(model => model.USER_DETAILS.PASSWORD, new { @class = "form-control", required = "", placeholder = "Password" })
+
+                            </div>
+                        </div>
+                        @*<div class="form-group row">
                                 <label for="inputPassword3" class="col-sm-3 col-form-label"> Confirm Password</label>
                                 <div class="col-sm-9">
                                     @Html.PasswordFor(model => model.CPASSWORD, new { @class = "form-control", required = "", placeholder = "Confirm Password" })
                                 </div>
-                            </div>
+                            </div>*@
 
-                            <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-3 col-form-label">Full Name</label>
-                                <div class="col-sm-9">
-                                    @Html.TextBoxFor(model => model.USER_DETAILS.FULLNAME, new { @class = "form-control", required = "", placeholder = "Full Name" })
-                                </div>
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-3 col-form-label">Full Name</label>
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(model => model.USER_DETAILS.FULLNAME, new { @class = "form-control", required = "", placeholder = "Full Name" })
                             </div>
-                            <div class="form-group row">
+                        </div>
+                        @*<div class="form-group row">
                                 <label for="inputPassword3" class="col-sm-3 col-form-label"> Mobile</label>
                                 <div class="col-sm-9">
                                     @Html.TextBoxFor(model => model.USER_DETAILS.MOBILE, new { @class = "form-control", required = "", placeholder = "Contact" })
@@ -79,11 +81,11 @@
                                             <label class="form-check-label" for="gridRadios1">
                                                 Others
                                             </label>
-                                        </div>                                       
+                                        </div>
                                     </div>
                                 </div>
-                            </fieldset>
-                            @*<div class="form-group row">
+                            </fieldset>*@
+                        @*<div class="form-group row">
                                 <div class="col-sm-3">R</div>
                                 <div class="col-sm-9">
                                     <div class="form-check">
@@ -94,20 +96,41 @@
                                     </div>
                                 </div>
                             </div>*@
-                            <div class="form-group row">
-                                <div class="col-sm-9">
-                                    <button type="submit" class="btn btn-primary">Sign Up</button>
-                                </div>
+                        <div class="form-group row">
+                            <div class="col-sm-9">
+                                <button type="submit" class="btn btn-primary">Sign Up</button>
                             </div>
-                       }
-                        <a class="dropdown-item" href="@Url.Action("Login","Login")">Allready have an account? Login</a>
-                        <!-- /form card login -->
-                    </div>
-
+                        </div>
+                    }
+                    <a class="dropdown-item" href="@Url.Action("Login","Login")">Allready have an account? Login</a>
+                    <!-- /form card login -->
                 </div>
-                <!--/row-->
+
             </div>
-            <!--/col-->
+            <!--/row-->
         </div>
-        <!--/row-->
+        <!--/col-->
     </div>
+    <!--/row-->
+</div>
+<div class="container">
+    <table class="table table-bordered" >
+        <tr><td>Uid</td><td>edit</td><td>delete</td></tr>
+        @if (Model != null)
+        {
+            if (Model.Userdtl != null)
+            {
+                foreach (var v in Model.Userdtl)
+                {
+                    <tr>
+                        <td>@v.USERID</td>
+                        <td><a class="text-success" title="Edit" href="@Url.Action("Registrationedit", "login" , new { uid=v.USERID })"><i class="fa fa-edit"></i></a> </td>
+                        <td>
+                            <a class="text-danger" title="Edit" href="@Url.Action("Registrationdelete", "login" , new { uid=v.USERID })"><i class="fa fa-trash"></i></a>    &nbsp; &nbsp; &nbsp;
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </table>
+</div>

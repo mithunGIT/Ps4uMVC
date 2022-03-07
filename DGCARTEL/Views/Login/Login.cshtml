@@ -51,18 +51,18 @@
                                     @Html.ValidationMessageFor(model => model.USER_DETAILS.PASSWORD)
                                     <div class="invalid-feedback">Enter your password too!</div>
                                 </div>
-                                <div class="form-check">
+                                @*<div class="form-check">
                                     @Html.CheckBoxFor(model => model.REMEMBERME)
                                     <label class="form-check-label" for="dropdownCheck">
                                         Remember me
                                     </label>
-                                </div>
+                                </div>*@
                                 @*<button type="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Login</button>*@
                                 <button type="submit" class="btn btn-primary">Sign in</button>
                                 }
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="@Url.Action("Registration","Login")">New around here? Sign up</a>
-                                <a class="dropdown-item" href="@Url.Action("ForgotPassword","Login")">Forgot password?</a>
+                                @*<a class="dropdown-item" href="@Url.Action("ForgotPassword","Login")">Forgot password?</a>*@
                             </div>
                             <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
                             <!--/card-block-->

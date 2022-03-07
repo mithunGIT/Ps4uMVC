@@ -41,7 +41,7 @@
                     $("#padvertisement").html(response);
                 },
                 failure: function (response) {
-                    alert("Message: " + response.statusText);
+                    //alert("Message: " + response.statusText);
                 },
                 error: function (response) {
                     //alert("Message: " + response.statusText);
@@ -132,9 +132,12 @@
         <div class="row">
             <div class="col-lg-10 mx-auto">
                 <h2>My Advertisement Header</h2>
-                <p class="lead mb-5" id="padvertisement">
-                 
-                </p>
+                <a href="http://localhost:51149/Education/Education">
+                    <p class="lead mb-5" id="padvertisement">
+
+                    </p>
+                </a>
+               
                 @*<a class="btn btn-dark btn-xl js-scroll-trigger" href="#services">What We Offer</a>*@
             </div>
         </div>

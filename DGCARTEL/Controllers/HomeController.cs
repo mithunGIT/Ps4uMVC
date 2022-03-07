@@ -73,51 +73,51 @@ namespace DGCARTEL.Controllers
             }
             return View();
         }
-        public ActionResult OpenUpdateProfile(LoginScreen VM)
-        {
-            try
-            {
-                var USERID = (decimal)Session["USERID"];
-                DGCARTELContext db = new DGCARTELContext();
-                var USER_DETAILS_data = db.USER_DETAILS.Where(a => a.AUTOUSERID == USERID).FirstOrDefault();
-                LoginScreen ls = new LoginScreen();
-                ls.USER_DETAILS = USER_DETAILS_data;
-                ModelState.Clear();
-                return PartialView("_UpdateProfile", ls);
-            }
-            catch (Exception e)
-            {
-                return Content(e.ToString());
-            }
-        }
+        //public ActionResult OpenUpdateProfile(LoginScreen VM)
+        //{
+        //    try
+        //    {
+        //        var USERID = (decimal)Session["USERID"];
+        //        DGCARTELContext db = new DGCARTELContext();
+        //        var USER_DETAILS_data = db.USER_DETAILS.Where(a => a.AUTOUSERID == USERID).FirstOrDefault();
+        //        LoginScreen ls = new LoginScreen();
+        //        ls.USER_DETAILS = USER_DETAILS_data;
+        //        ModelState.Clear();
+        //        return PartialView("_UpdateProfile", ls);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return Content(e.ToString());
+        //    }
+        //}
 
-        public ActionResult SaveUpdateProfile(LoginScreen VM, FormCollection FC)
-        {
-            try
-            {
-                var USERID = (decimal)Session["USERID"];
-                DGCARTELContext db = new DGCARTELContext();
-                var USER_DETAILS_data = db.USER_DETAILS.Where(a => a.AUTOUSERID == USERID).FirstOrDefault();
-                DGCARTELContext db1 = new DGCARTELContext();
-                USER_DETAILS1 udt = new USER_DETAILS1();
-                udt.AUTOUSERID = USERID;
-                udt.PASSWORD = USER_DETAILS_data.PASSWORD;
-                udt.USEREMAIL = VM.USER_DETAILS.USEREMAIL.ToUpper();
-                udt.FULLNAME = VM.USER_DETAILS.FULLNAME.ToUpper();
-                udt.MOBILE = VM.USER_DETAILS.MOBILE;
-                udt.DOB = VM.USER_DETAILS.DOB;
-                udt.ADDRESS = VM.USER_DETAILS.ADDRESS.ToUpper();
-                udt.GENDER = VM.USER_DETAILS.GENDER.ToUpper();
-                db1.Entry(udt).State = System.Data.Entity.EntityState.Modified;
-                db1.SaveChanges();
-                return Content("updated");
-            }
-            catch (Exception ex)
-            {
-                return Content(ex.Message);
-            }
+        //public ActionResult SaveUpdateProfile(LoginScreen VM, FormCollection FC)
+        //{
+        //    try
+        //    {
+        //        var USERID = (decimal)Session["USERID"];
+        //        DGCARTELContext db = new DGCARTELContext();
+        //        var USER_DETAILS_data = db.tb.Where(a => a.AUTOUSERID == USERID).FirstOrDefault();
+        //        DGCARTELContext db1 = new DGCARTELContext();
+        //        USER_DETAILS1 udt = new USER_DETAILS1();
+        //        udt.AUTOUSERID = USERID;
+        //        udt.PASSWORD = USER_DETAILS_data.PASSWORD;
+        //        udt.USEREMAIL = VM.USER_DETAILS.USEREMAIL.ToUpper();
+        //        udt.FULLNAME = VM.USER_DETAILS.FULLNAME.ToUpper();
+        //        udt.MOBILE = VM.USER_DETAILS.MOBILE;
+        //        udt.DOB = VM.USER_DETAILS.DOB;
+        //        udt.ADDRESS = VM.USER_DETAILS.ADDRESS.ToUpper();
+        //        udt.GENDER = VM.USER_DETAILS.GENDER.ToUpper();
+        //        db1.Entry(udt).State = System.Data.Entity.EntityState.Modified;
+        //        db1.SaveChanges();
+        //        return Content("updated");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Content(ex.Message);
+        //    }
 
-        }
+        //}
         public ActionResult GetAdvertisement()
         {
             try
