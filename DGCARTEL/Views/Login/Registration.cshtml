@@ -1,0 +1,113 @@
+﻿@model DGCARTEL.ViewModels.LoginScreen
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_EntryLayout.cshtml";
+}
+    <div class="container py-2">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="text-center text-white mb-4">DGcartel Regisration form</h2>
+                <div class="row">
+                    <div class="col-md-7 mx-auto">
+                        <!-- form card login -->
+                       @using (Html.BeginForm())
+                       { 
+                           @Html.ValidationSummary("", new { @class = "text-danger" })
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-3 col-form-label">Email</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.USER_DETAILS.USEREMAIL , new { @class = "form-control", required = "", placeholder = "Email",type="email" })                                                              
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-3 col-form-label">Password</label>
+                                <div class="col-sm-9">
+                                    @Html.PasswordFor(model => model.USER_DETAILS.PASSWORD, new { @class = "form-control", required = "", placeholder = "Password" })
+
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-3 col-form-label"> Confirm Password</label>
+                                <div class="col-sm-9">
+                                    @Html.PasswordFor(model => model.CPASSWORD, new { @class = "form-control", required = "", placeholder = "Confirm Password" })
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-3 col-form-label">Full Name</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.USER_DETAILS.FULLNAME, new { @class = "form-control", required = "", placeholder = "Full Name" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-3 col-form-label"> Mobile</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.USER_DETAILS.MOBILE, new { @class = "form-control", required = "", placeholder = "Contact" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-3 col-form-label"> DOB</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.USER_DETAILS.DOB, new {type="date", @class = "form-control", required = "", placeholder = "Dob" })
+                                 </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-3 col-form-label"> Address</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.USER_DETAILS.ADDRESS, new { @class = "form-control", required = "", placeholder = "Full Address" })
+                               </div>
+                            </div>
+                            <fieldset class="form-group">
+                                <div class="row">
+                                    <label class="col-form-label col-sm-3 pt-0" >Gender</label>
+                                    <div class="col-sm-9">
+                                        <div class="form-check custom-control-inline">
+                                            @Html.RadioButtonFor(g => g.USER_DETAILS.GENDER, "M", new { @class = "form-check-input" })
+                                            <label class="form-check-label" for="gridRadios1">
+                                                Male
+                                            </label>
+                                        </div>
+                                        <div class="form-check custom-control-inline">
+                                            @Html.RadioButtonFor(g => g.USER_DETAILS.GENDER, "F", new { @class = "form-check-input" })
+                                            <label class="form-check-label" for="gridRadios1">
+                                                FeMale
+                                            </label>
+                                        </div>
+
+                                        <div class="form-check custom-control-inline">
+                                            @Html.RadioButtonFor(g => g.USER_DETAILS.GENDER, "O", new { @class = "form-check-input" })
+                                            <label class="form-check-label" for="gridRadios1">
+                                                Others
+                                            </label>
+                                        </div>                                       
+                                    </div>
+                                </div>
+                            </fieldset>
+                            @*<div class="form-group row">
+                                <div class="col-sm-3">R</div>
+                                <div class="col-sm-9">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="gridCheck1">
+                                        <label class="form-check-label" for="gridCheck1">
+                                            Example checkbox
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>*@
+                            <div class="form-group row">
+                                <div class="col-sm-9">
+                                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                                </div>
+                            </div>
+                       }
+                        <a class="dropdown-item" href="@Url.Action("Login","Login")">Allready have an account? Login</a>
+                        <!-- /form card login -->
+                    </div>
+
+                </div>
+                <!--/row-->
+            </div>
+            <!--/col-->
+        </div>
+        <!--/row-->
+    </div>

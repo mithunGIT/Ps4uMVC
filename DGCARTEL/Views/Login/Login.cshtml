@@ -1,0 +1,80 @@
+﻿@model DGCARTEL.ViewModels.LoginScreen
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_EntryLayout.cshtml";
+}
+@*
+            <script>
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '424504491287872',
+                    xfbml: true,
+                    version: 'v3.1'
+                });
+
+                FB.AppEvents.logPageView();
+
+            };
+
+            (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.1&appId=424504491287872&autoLogAppEvents=1';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+*@
+    <div id="fb-root"></div>
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="text-center text-white mb-4">DGcartel Login Form</h2>
+                <div class="row">
+                    <div class="col-md-6 mx-auto">
+                        <!-- form card login -->
+                        <div class="card rounded-0">
+                            <div class="card-header">
+                                <h3 class="mb-0">Login</h3>
+                            </div>
+                            <div class="card-body">
+                                @using (Html.BeginForm())
+                                {
+                                @Html.ValidationSummary("", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    <label for="uname1">Username</label>
+                                    @Html.TextBoxFor(model => model.USER_DETAILS.USEREMAIL, new { @class = "form-control form-control-lg rounded-0", type = "text", required = "" })
+                                    @Html.ValidationMessageFor(model => model.USER_DETAILS.USEREMAIL)
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    @Html.PasswordFor(model => model.USER_DETAILS.PASSWORD, new { @class = "form-control form-control-lg rounded-0", required = "" })
+                                    @Html.ValidationMessageFor(model => model.USER_DETAILS.PASSWORD)
+                                    <div class="invalid-feedback">Enter your password too!</div>
+                                </div>
+                                <div class="form-check">
+                                    @Html.CheckBoxFor(model => model.REMEMBERME)
+                                    <label class="form-check-label" for="dropdownCheck">
+                                        Remember me
+                                    </label>
+                                </div>
+                                @*<button type="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Login</button>*@
+                                <button type="submit" class="btn btn-primary">Sign in</button>
+                                }
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="@Url.Action("Registration","Login")">New around here? Sign up</a>
+                                <a class="dropdown-item" href="@Url.Action("ForgotPassword","Login")">Forgot password?</a>
+                            </div>
+                            <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+                            <!--/card-block-->
+                        </div>
+                        <!-- /form card login -->
+                    </div>
+
+                </div>
+                <!--/row-->
+            </div>
+            <!--/col-->
+        </div>
+        <!--/row-->
+    </div>
+

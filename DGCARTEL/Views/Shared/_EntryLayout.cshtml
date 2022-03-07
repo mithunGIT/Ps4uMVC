@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - DGCARTEL</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/umd/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        body, html {
+            height: 100%;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #FFB88C, #DE6262);
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            debugger;
+            if ('@TempData["MSG"]' != "") {
+                alert('@ViewBag.MSG');
+            }
+        });
+    </script>
+   
+</head>
+<body>
+    <a class="nav-link" href="@Url.Action("index","Home")">HOME</a>
+    @RenderBody()
+</body>
+</html>

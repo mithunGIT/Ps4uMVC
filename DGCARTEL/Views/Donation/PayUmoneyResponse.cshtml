@@ -1,0 +1,47 @@
+﻿@model DGCARTEL.ViewModels.PayUmoneyIntegration
+@{
+    ViewBag.Title = "Payment Failed";
+    Layout = "~/Views/Shared/_EntryLayout.cshtml";
+}
+@*<script>
+        $(document).ready(function () {
+            $("#downloadslip").click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: "@Url.Action("GenerateInvoice", "Donation")",
+                dataType: "json",
+                success: function () {
+                    alert("Download Successfully");
+                },
+                failure: function (response) {
+                    alert("Message: " + response.statusText);
+                },
+                error: function (response) {
+                    alert("Message: " + response.statusText);
+                }
+                });
+            });
+        });
+    </script>*@
+<h2 class="text-center text-white mb-4">Payment Successful</h2>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-9 mx-auto">
+            @using (Html.BeginForm("DownloadInvoice", "Donation", FormMethod.Post))
+            {
+                <table class="table table-bordered">
+                    <thead><tr><th>Name:</th><th>@Html.DisplayFor(model => model.PAYUMONEY_DATA.FIRSTNAME) @Html.DisplayFor(model => model.PAYUMONEY_DATA.LASTNAME)</th></tr></thead>
+                    <tbody>
+                        <tr><td>Transaction Id</td><td>@Html.DisplayFor(model => model.PAYUMONEY_DATA.TXNID)</td> </tr>
+                        <tr><td>Amount</td><td>@Html.DisplayFor(model => model.PAYUMONEY_DATA.AMOUNT)</td> </tr>
+                        <tr><td>PayUmoneyId</td><td>@Html.DisplayFor(model => model.PAYUMONEY_DATA.PAYUMONEYID)</td> </tr>
+                        <tr><td>Added On</td><td>@Html.DisplayFor(model => model.PAYUMONEY_DATA.ADDEDON)</td> </tr>
+                        <tr><td>Status</td><td>@Html.DisplayFor(model => model.PAYUMONEY_DATA.STATUS)</td> </tr>
+                    </tbody>
+                </table>
+                <input id="downloadslip" type="submit" class="btn btn-info" value="Download Slip" />
+            }
+        </div>
+    </div>
+</div>

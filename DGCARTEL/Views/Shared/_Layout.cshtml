@@ -1,42 +1,157 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <meta name="description" content="@ViewBag.metadescription" />
+    <meta name="keywords" content="@ViewBag.metakeywords" />
+    <title>@ViewBag.Title - mycon</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/umd/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script>
+        $(document).ready(function () {
+            debugger;
+            if ('@TempData["MSG"]' != "") {
+                alert('@TempData["MSG"]');
+            }
+        });
+        function logOut() {
+            if (confirm("Are You sure to Logout?")) {
+                window.location = "@Url.Action("Logout", "Login")";
+            }
+        }
+        function updateProfile() {
+            $.ajax({
+                type: 'POST',
+                url: "@Url.Action("OpenUpdateProfile", "HOME")",
+                data: $('form').serialize(),
+                success: function (response) {
+                    $(".modal-dialog").html(response);
+                },
+                failure: function (response) {
+                    alert("Message: " + response.statusText);
+                },
+                error: function (response) {
+                    alert("Message: " + response.statusText);
+                }
+            });
+        }
+        function save_updateProfile() {
+            $.ajax({
+                type: 'POST',
+                url: "@Url.Action("SaveUpdateProfile", "HOME")",
+                data: $('form').serialize(),
+            success: function (response) {               
+                if (response == "updated") {
+                    $('#profileModal').modal('hide');
+                    alert("Profile Updated");
+                } else {
+                    alert(response);
+                }
+            },
+            failure: function (response) {
+                alert("Message: " + response.statusText);
+            },
+            error: function (response) {
+                alert("Message: " + response.statusText);
+            }
+        });
+        }
+
+
+    </script>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            @{
+                var USERNAME = Session["USERNAME"];
+            }
+            <a class="navbar-brand" href='@Url.Action("Index", "Home")'>
+                <img src="~/Images/DGcartel_Logo.png" height="30" class="d-inline-block align-top" alt="DGcartel">
+            </a>
+            @*@Html.ActionLink("DGcartel", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+            @if (USERNAME != null)
+            {
+                <span style="color: deeppink;">welcome  @USERNAME </span>
+            }
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("index","Home")">HOME</a>
+                    </li>
+                    @*<li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Website","Website")">Software</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Tourism","Tourism")">Tourism</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Education","Education")">Education</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Contact","HOME")">ContactUs</a>
+                    </li>*@
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="DropdownUser" data-target="#navbarDropdown" role="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="DropdownUser" id="navbarDropdown"> 
+                            @if (USERNAME == null)
+                            {
+                                <a class="dropdown-item" href="@Url.Action("Login","Login")">Login</a>
+                            }
+                            else
+                            {
+                                <a class="dropdown-item" onclick="logOut()"  href="#">Logout</a>
+                                @*<a class="dropdown-item" onclick="updateProfile()" data-toggle="modal" data-target="#profileModal"  href="#">Update Profile</a>*@
+                            }
+                        </div>
+                    </li>
                 </ul>
+            </div>   
+       
+         </div>
+    </nav>
+    <!-- Page Content -->
+    <div>
+        @RenderBody()
+        <!-- Page Heading/Breadcrumbs -->
+
+        <hr />
+        @*<div class="control-group form-group">
+                <div class="controls">
+                    <label>Email Address:</label>
+                    <input type="email" class="form-control" id="email" required data-validation-required-message="Please enter your email address.">
+                </div>
+            </div>*@
+
+
+    </div>
+    
+        <div class="modal fade" id="profileModal"  role="dialog">
+            <div class="modal-dialog" role="document">
+                
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    <footer class="py-2 bg-dark">
+        <div class="container">
+          <p class="m-0 text-center text-white"> <a href="@Url.Action("PayUmoney","Donation")">   Donate </a>   Copyright &copy; Your Website 2018</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+    <!-- Bootstrap core JavaScript -->
+    @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>*@
 </body>
 </html>

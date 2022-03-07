@@ -1,0 +1,76 @@
+﻿@model DGCARTEL.ViewModels.LoginScreen
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        @using (Html.BeginForm())
+            {
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group row">
+                <label for="inputEmail3" class="col-sm-3 col-form-label">Email</label>
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(model => model.USER_DETAILS.USEREMAIL, new { @class = "form-control", required = "", placeholder = "Email", type = "email" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputEmail3" class="col-sm-3 col-form-label">Full Name</label>
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(model => model.USER_DETAILS.FULLNAME, new { @class = "form-control", required = "", placeholder = "Full Name" })
+                </div>
+            </div>
+                <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-3 col-form-label"> Mobile</label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(model => model.USER_DETAILS.MOBILE, new { @class = "form-control", required = "", placeholder = "Contact" })
+                    </div>
+                </div>
+                            <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-3 col-form-label"> DOB</label>
+                                <div class="col-sm-9">
+                                    @Html.EditorFor(model => model.USER_DETAILS.DOB, new { htmlAttributes = new { type = "date", @class = "form-control", required = "", } })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-3 col-form-label"> Address</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.USER_DETAILS.ADDRESS, new { @class = "form-control", required = "", placeholder = "Full Address" })
+                                </div>
+                            </div>
+                            <fieldset class="form-group">
+                                <div class="row">
+                                    <label class="col-form-label col-sm-3 pt-0">Gender</label>
+                                    <div class="col-sm-9">
+                                        <div class="form-check custom-control-inline">
+                                            @Html.RadioButtonFor(g => g.USER_DETAILS.GENDER, "M", new { @class = "form-check-input" })
+                                            <label class="form-check-label" for="gridRadios1">
+                                                Male
+                                            </label>
+                                        </div>
+                                        <div class="form-check custom-control-inline">
+                                            @Html.RadioButtonFor(g => g.USER_DETAILS.GENDER, "F", new { @class = "form-check-input" })
+                                            <label class="form-check-label" for="gridRadios1">
+                                                FeMale
+                                            </label>
+                                        </div>
+
+                                        <div class="form-check custom-control-inline">
+                                            @Html.RadioButtonFor(g => g.USER_DETAILS.GENDER, "O", new { @class = "form-check-input" })
+                                            <label class="form-check-label" for="gridRadios1">
+                                                Others
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+        }
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="SaveProfile" class="btn btn-primary" onclick="save_updateProfile();">Save changes</button>
+    </div>
+</div>
+
