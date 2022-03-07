@@ -18,9 +18,9 @@
     <script>
         $(document).ready(function () {
             debugger;
-            if ('@TempData["MSG"]' != "") {
+            @*if ('@TempData["MSG"]' != "") {
                 alert('@TempData["MSG"]');
-            }
+            }*@
         });
         function logOut() {
             if (confirm("Are You sure to Logout?")) {
@@ -39,7 +39,7 @@
                     alert("Message: " + response.statusText);
                 },
                 error: function (response) {
-                    alert("Message: " + response.statusText);
+                    //alert("Message: " + response.statusText);
                 }
             });
         }
@@ -60,7 +60,7 @@
                 alert("Message: " + response.statusText);
             },
             error: function (response) {
-                alert("Message: " + response.statusText);
+                //alert("Message: " + response.statusText);
             }
         });
         }

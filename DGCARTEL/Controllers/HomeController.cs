@@ -15,6 +15,10 @@ namespace DGCARTEL.Controllers
     {
         public ActionResult Index()
         {
+            if (Session["USERNAME"] == null)
+            {
+                return RedirectToAction("login", "login");
+            }
             DGCARTELContext db = new DGCARTELContext();
             //var USER_DETAILS_data = db.USER_DETAILS.Where(a => a.AUTOUSERID == USERID).FirstOrDefault();
             var pageMetaDetail = db.PageMetaDetail.FirstOrDefault(a => a.PageUrl == "Home/Index");

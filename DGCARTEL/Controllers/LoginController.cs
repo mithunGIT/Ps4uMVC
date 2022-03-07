@@ -38,7 +38,7 @@ namespace DGCARTEL.Controllers
             {
                 Session["USEREMAIL"] = USEREMAIL;
                 //Session["USERID"] = tblUser_data.AUTOUSERID;
-                //Session["USERNAME"] = tblUser_data.FULLNAME;
+                Session["USERNAME"] = tblUser_data.UserName;
                 if (VM.REMEMBERME == true)
                 {
                     //Response.Cookies["USEREMAIL"].Value = VM.tblUser.USEREMAIL;
